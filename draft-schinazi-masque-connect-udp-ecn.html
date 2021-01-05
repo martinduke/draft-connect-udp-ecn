@@ -78,11 +78,11 @@ body {
 }
 h1, h2, h3 {
   font-size: 22px;
-  line-height: 26px;
+  line-height: 27px;
 }
 h4, h5, h6 {
-  font-size: 18px;
-  line-height: 22px;
+  font-size: 20px;
+  line-height: 24px;
 }
 
 /* general structure */
@@ -238,6 +238,7 @@ img {
 }
 figure {
   margin: 0.5em 0;
+  padding: 0;
 }
 figure blockquote {
   margin: 0.8em 0.4em 0.4em;
@@ -823,11 +824,11 @@ address div.right {
 <thead><tr>
 <td class="left">Internet-Draft</td>
 <td class="center">CONNECT-UDP ECN Extension</td>
-<td class="right">December 2020</td>
+<td class="right">January 2021</td>
 </tr></thead>
 <tfoot><tr>
 <td class="left">Schinazi</td>
-<td class="center">Expires 16 June 2021</td>
+<td class="center">Expires 9 July 2021</td>
 <td class="right">[Page]</td>
 </tr></tfoot>
 </table>
@@ -840,12 +841,12 @@ address div.right {
 <dd class="internet-draft">draft-schinazi-masque-connect-udp-ecn-latest</dd>
 <dt class="label-published">Published:</dt>
 <dd class="published">
-<time datetime="2020-12-13" class="published">13 December 2020</time>
+<time datetime="2021-01-05" class="published">5 January 2021</time>
     </dd>
 <dt class="label-intended-status">Intended Status:</dt>
 <dd class="intended-status">Standards Track</dd>
 <dt class="label-expires">Expires:</dt>
-<dd class="expires"><time datetime="2021-06-16">16 June 2021</time></dd>
+<dd class="expires"><time datetime="2021-07-09">9 July 2021</time></dd>
 <dt class="label-authors">Author:</dt>
 <dd class="authors">
 <div class="author">
@@ -892,7 +893,7 @@ contains the draft: <span><a href="https://github.com/DavidSchinazi/draft-connec
         time. It is inappropriate to use Internet-Drafts as reference
         material or to cite them other than as "work in progress."<a href="#section-boilerplate.1-3" class="pilcrow">¶</a></p>
 <p id="section-boilerplate.1-4">
-        This Internet-Draft will expire on 16 June 2021.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
+        This Internet-Draft will expire on 9 July 2021.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="copyright">
@@ -901,7 +902,7 @@ contains the draft: <span><a href="https://github.com/DavidSchinazi/draft-connec
 <a href="#name-copyright-notice" class="section-name selfRef">Copyright Notice</a>
         </h2>
 <p id="section-boilerplate.2-1">
-            Copyright (c) 2020 IETF Trust and the persons identified as the
+            Copyright (c) 2021 IETF Trust and the persons identified as the
             document authors. All rights reserved.<a href="#section-boilerplate.2-1" class="pilcrow">¶</a></p>
 <p id="section-boilerplate.2-2">
             This document is subject to BCP 78 and the IETF Trust's Legal
@@ -951,7 +952,10 @@ contains the draft: <span><a href="https://github.com/DavidSchinazi/draft-connec
                 <p id="section-toc.1-1.7.2.1.1"><a href="#section-7.1" class="xref">7.1</a>.  <a href="#name-http-header" class="xref">HTTP Header</a><a href="#section-toc.1-1.7.2.1.1" class="pilcrow">¶</a></p>
 </li>
               <li class="toc ulEmpty compact" id="section-toc.1-1.7.2.2">
-                <p id="section-toc.1-1.7.2.2.1"><a href="#section-7.2" class="xref">7.2</a>.  <a href="#name-stream-chunk-type-registrat" class="xref">Stream Chunk Type Registration</a><a href="#section-toc.1-1.7.2.2.1" class="pilcrow">¶</a></p>
+                <p id="section-toc.1-1.7.2.2.1"><a href="#section-7.2" class="xref">7.2</a>.  <a href="#name-flow-identifier-parameters" class="xref">Flow Identifier Parameters</a><a href="#section-toc.1-1.7.2.2.1" class="pilcrow">¶</a></p>
+</li>
+              <li class="toc ulEmpty compact" id="section-toc.1-1.7.2.3">
+                <p id="section-toc.1-1.7.2.3.1"><a href="#section-7.3" class="xref">7.3</a>.  <a href="#name-stream-chunk-type-registrat" class="xref">Stream Chunk Type Registration</a><a href="#section-toc.1-1.7.2.3.1" class="pilcrow">¶</a></p>
 </li>
             </ul>
 </li>
@@ -1026,20 +1030,20 @@ indicated support for it in their CONNECT-UDP request and response.<a href="#sec
       </h2>
 <p id="section-3-1">If a client supports this extension and HTTP/3 datagrams
 <span>[<a href="#H3DGRAM" class="xref">H3DGRAM</a>]</span>, it can attempt to use datagrams for
-ECN information. This is done by allocating four datagram flow identifiers
-(as opposed to one in traditional CONNECT-UDP) and communicating them to the
-proxy using parameters on the "Datagram-Flow-Id" header. These parameters are
-"ect0", "ect1" and "ce". For example:<a href="#section-3-1" class="pilcrow">¶</a></p>
+ECN information. This is done by allocating four datagram flow identifiers (as
+opposed to one in traditional CONNECT-UDP) and communicating them to the proxy
+using named elements on the "Datagram-Flow-Id" header. These names are
+"ecn-ect0", "ecn-ect1", and "ecn-ce". For example:<a href="#section-3-1" class="pilcrow">¶</a></p>
 <div class="artwork art-text alignLeft" id="section-3-2">
 <pre>
-  Datagram-Flow-Id = 100; ect0=102; ect1=104; ce=106
+  Datagram-Flow-Id = 42, 44; ecn-ect0, 46; ecn-ect1, 48; ecn-ce
 </pre><a href="#section-3-2" class="pilcrow">¶</a>
 </div>
 <p id="section-3-3">If the proxy wishes to support datagram encoding of this extension, it echoes
-those parameters in its CONNECT-UDP response. The main flow identifier now
-represents Not-ECT, whereas the one in "ect0" represents ECT(0), "ect1"
-represents ECT(1) and "ce" represents CE; see Section 5 of <span>[<a href="#ECN" class="xref">ECN</a>]</span> for
-the definition of these IP header fields.<a href="#section-3-3" class="pilcrow">¶</a></p>
+those named elements in its CONNECT-UDP response. The unnamed element now
+represents Not-ECT, whereas the one in "ecn-ect0" represents ECT(0), "ecn-ect1"
+represents ECT(1) and "ecn-ce" represents CE; see Section 5 of <span>[<a href="#ECN" class="xref">ECN</a>]</span> for the
+definition of these IP header fields.<a href="#section-3-3" class="pilcrow">¶</a></p>
 <p id="section-3-4">When the proxy receives a datagram from the given flow identifier, it sets
 the IP packet's ECN bits accordingly on the UDP packet it sends to the target.
 Similarly, in the other direction the flow identifier represents which ECN bits
@@ -1083,14 +1087,15 @@ in the reverse direction to indicate which ECN bits received from the target.<a 
 However, in some cases, an HTTP request may travel across multiple HTTP
 connections if there are HTTP intermediaries involved; see Section 2.3 of
 <span>[<a href="#RFC7230" class="xref">RFC7230</a>]</span>.<a href="#section-5-1" class="pilcrow">¶</a></p>
-<p id="section-5-2">Intermediaries that support this extension and HTTP/3 datagrams MUST
-negotiate flow identifiers separately on the client-facing and server-facing
-connections. This is accomplished by having the intermediary parse the
+<p id="section-5-2">Intermediaries that support this extension and HTTP/3 datagrams MUST negotiate
+all four flow identifiers separately on the client-facing and server-facing
+connections. This is accomplished by having the intermediary parse the unnamed
+element and the "ecn-ect0", "ecn-ect1", and "ecn-ce" named elements in the
 "Datagram-Flow-Id" header on all CONNECT-UDP requests it receives, and sending
-the same value in the "Datagram-Flow-Id" header on the response. The
-intermediary will perform this individualy for all the parameters defined by
-this extension as well, in addition to the rules in the "HTTP Intermediaries"
-section of <span>[<a href="#CONNECT-UDP" class="xref">CONNECT-UDP</a>]</span>.<a href="#section-5-2" class="pilcrow">¶</a></p>
+the same four flow identifiers in the "Datagram-Flow-Id" header on the response.<a href="#section-5-2" class="pilcrow">¶</a></p>
+<p id="section-5-3">Intermediaries MUST NOT send the "ECN" header with a value of 1 to the client
+on its response unless it has received that same value in the response it
+received from the server.<a href="#section-5-3" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="security">
@@ -1126,14 +1131,37 @@ defined in <span>[<a href="#CONNECT-UDP" class="xref">CONNECT-UDP</a>]</span>.<a
 </div>
 </section>
 </div>
-<div id="iana-chunk-type">
+<div id="iana-params">
 <section id="section-7.2">
-        <h3 id="name-stream-chunk-type-registrat">
-<a href="#section-7.2" class="section-number selfRef">7.2. </a><a href="#name-stream-chunk-type-registrat" class="section-name selfRef">Stream Chunk Type Registration</a>
+        <h3 id="name-flow-identifier-parameters">
+<a href="#section-7.2" class="section-number selfRef">7.2. </a><a href="#name-flow-identifier-parameters" class="section-name selfRef">Flow Identifier Parameters</a>
         </h3>
-<p id="section-7.2-1">This document will request IANA to register the following entry in the
-"CONNECT-UDP Stream Chunk Type" registry <span>[<a href="#CONNECT-UDP" class="xref">CONNECT-UDP</a>]</span>:<a href="#section-7.2-1" class="pilcrow">¶</a></p>
+<p id="section-7.2-1">This document will request IANA to register the "ecn-ect0", "ecn-ect1", and
+"ecn-ce" flow identifier parameters in the "HTTP Datagram Flow Identifier
+Parameters" registry (see <span>[<a href="#H3DGRAM" class="xref">H3DGRAM</a>]</span>):<a href="#section-7.2-1" class="pilcrow">¶</a></p>
 <div class="artwork art-text alignLeft" id="section-7.2-2">
+<pre>
+  +----------+-------------------------+---------+---------------+
+  |   Key    |       Description       | Is Name |   Reference   |
+  +----------+-------------------------+---------+---------------+
+  | ecn-ect0 | UDP payload with ECT(0) |   Yes   | This document |
+  +----------+-------------------------+---------+---------------+
+  | ecn-ect1 | UDP payload with ECT(1) |   Yes   | This document |
+  +----------+-------------------------+---------+---------------+
+  | ecn-ce   | UDP payload with CE     |   Yes   | This document |
+  +----------+-------------------------+---------+---------------+
+</pre><a href="#section-7.2-2" class="pilcrow">¶</a>
+</div>
+</section>
+</div>
+<div id="iana-chunk-type">
+<section id="section-7.3">
+        <h3 id="name-stream-chunk-type-registrat">
+<a href="#section-7.3" class="section-number selfRef">7.3. </a><a href="#name-stream-chunk-type-registrat" class="section-name selfRef">Stream Chunk Type Registration</a>
+        </h3>
+<p id="section-7.3-1">This document will request IANA to register the following entry in the
+"CONNECT-UDP Stream Chunk Type" registry <span>[<a href="#CONNECT-UDP" class="xref">CONNECT-UDP</a>]</span>:<a href="#section-7.3-1" class="pilcrow">¶</a></p>
+<div class="artwork art-text alignLeft" id="section-7.3-2">
 <pre>
   +-------+-----------------+-------------------------+---------------+
   | Value |      Type       |       Description       |   Reference   |
@@ -1144,7 +1172,7 @@ defined in <span>[<a href="#CONNECT-UDP" class="xref">CONNECT-UDP</a>]</span>.<a
   +-------+-----------------+-------------------------+---------------+
   | 0x33  | UDP_PACKET_CE   | UDP payload with CE     | This document |
   +-------+-----------------+-------------------------+---------------+
-</pre><a href="#section-7.2-2" class="pilcrow">¶</a>
+</pre><a href="#section-7.3-2" class="pilcrow">¶</a>
 </div>
 </section>
 </div>
@@ -1157,7 +1185,7 @@ defined in <span>[<a href="#CONNECT-UDP" class="xref">CONNECT-UDP</a>]</span>.<a
 <dl class="references">
 <dt id="CONNECT-UDP">[CONNECT-UDP]</dt>
       <dd>
-<span class="refAuthor">Schinazi, D.</span>, <span class="refTitle">"The CONNECT-UDP HTTP Method"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-masque-connect-udp-00</span>, <time datetime="2020-08-28" class="refDate">28 August 2020</time>, <span>&lt;<a href="http://www.ietf.org/internet-drafts/draft-ietf-masque-connect-udp-00.txt">http://www.ietf.org/internet-drafts/draft-ietf-masque-connect-udp-00.txt</a>&gt;</span>. </dd>
+<span class="refAuthor">Schinazi, D.</span>, <span class="refTitle">"The CONNECT-UDP HTTP Method"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-masque-connect-udp-02</span>, <time datetime="2020-12-30" class="refDate">30 December 2020</time>, <span>&lt;<a href="http://www.ietf.org/internet-drafts/draft-ietf-masque-connect-udp-02.txt">http://www.ietf.org/internet-drafts/draft-ietf-masque-connect-udp-02.txt</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="ECN">[ECN]</dt>
       <dd>
